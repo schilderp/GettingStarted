@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, FileTest!</string>
+    <string name="app_name">FileTest</string>
+    <string name="save">Save to File</string>
+    <string name="create">Create File</string>
+    <string name="read">Read File</string>
+    <string name="output">File Output</string>
+    <string name="done">Done</string>
+    <string name="write">Write to the file</string>
+    <string name="read_static">Read Static File</string>
+    <string name="stats">Get File Stats</string>
+    <string name="directory">"Directory:  "</string>
+    <string name="files">Files:</string>
+    <string name="delete">Delete File</string>
+
+</resources>
