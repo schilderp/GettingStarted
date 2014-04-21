@@ -34,21 +34,11 @@ public class DownloadImageActivity extends Activity {
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        /** The system calls this to perform work in a worker thread and
-          * delivers it the parameters given to AsyncTask.execute() */
+ 
+    	
         protected Bitmap doInBackground(String... urls) {
-            return loadImageFromNetwork(urls[0]);
-        }
-        
-        /** The system calls this to perform work in the UI thread and delivers
-          * the result from doInBackground() */
-        protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
-        }
-        
-        private Bitmap loadImageFromNetwork(String imageURL){
-          	try {
-        		URL url = new URL(imageURL);
+        	try {
+        		URL url = new URL(urls[0]);
                 URLConnection conn = url.openConnection();
                 conn.connect();
 
@@ -63,6 +53,12 @@ public class DownloadImageActivity extends Activity {
         	}
         	return null;
         }
+        
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+        }
+        
+       
         
     }
 }
