@@ -37,73 +37,66 @@ public class DownloadImageActivity extends Activity {
     	new DownloadImageTask().execute(editText.getText().toString());
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Integer, Bitmap> {
-    	private ProgressDialog dialog;
-    	
-    	
-    	 protected void onPreExecute() {
-    		 
-    		 dialog = new ProgressDialog(DownloadImageActivity.this);
-    		 dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-             dialog.setMessage("Downloading Image. Please wait...");
-             dialog.setCancelable(false);
-             dialog.setMax(100);
-             dialog.show();
-         }
-    	
-    	
-    	
-    	/** The system calls this to perform work in a worker thread and
-          * delivers it the parameters given to AsyncTask.execute() */
-        protected Bitmap doInBackground(String... urls) {
-            return loadImageFromNetwork(urls[0]);
-        }
-        
-        /** The system calls this to perform work in the UI thread and delivers
-          * the result from doInBackground() */
-        protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-        }
-            
-     }
+	private class DownloadImageTask extends AsyncTask<String, Integer, Bitmap> {
+		private ProgressDialog dialog;
 
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-		dialog.setProgress(values[0]);
-        }
-        
-        
-        private Bitmap loadImageFromNetwork(String imageURL){
-        	int fileSize=0;
-        	double bytesRead=0;
-          	try {
-        		URL url = new URL(imageURL);
-                URLConnection conn = url.openConnection();
-                conn.connect();
-                fileSize = conn.getContentLength();
-                BufferedInputStream bis = 
-                		new BufferedInputStream(conn.getInputStream());
-                ByteArrayBuffer baf = new ByteArrayBuffer(50);
-                int current = 0;
-                
-                while ((current = bis.read()) != -1) {
-                        baf.append((byte) current);
-                        bytesRead = baf.length();
-                        if(bytesRead % 1000==0){
-                        	publishProgress((int)(bytesRead/fileSize * 100));
-                        }
-                }
-                
-                Bitmap bitmap=BitmapFactory.decodeByteArray(baf.toByteArray(), 0,baf.length());
-                bis.close();
-                return bitmap;
+		protected void onPreExecute() {
+			dialog = new ProgressDialog(DownloadImageActivity.this);
+			dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			dialog.setMessage("Downloading Image. Please wait...");
+			dialog.setCancelable(false);
+			dialog.setMax(100);
+			dialog.show();
+		}
 
-        	} catch (IOException e) {
-                Log.d("DEBUGTAG", "Unable to download file...");
-        	}
-        	return null;
-        	}
-        }
+		protected Bitmap doInBackground(String... urls) {
+			int fileSize = 0;
+			double bytesRead = 0;
+			try {
+				URL url = new URL(urls[0]);
+				URLConnection conn = url.openConnection();
+				conn.connect();
+
+				// first get the file size
+				fileSize = conn.getContentLength();
+
+				BufferedInputStream bis = new BufferedInputStream(
+						conn.getInputStream());
+				ByteArrayBuffer baf = new ByteArrayBuffer(50);
+				int current = 0;
+
+				// read bytes into buffer and update progress every 1,000 bytes
+				while ((current = bis.read()) != -1) {
+					baf.append((byte) current);
+					bytesRead = baf.length();
+					if (bytesRead % 1000 == 0) {
+						publishProgress((int) (bytesRead / fileSize * 100));
+					}
+				}
+
+				Bitmap bitmap = BitmapFactory.decodeByteArray(
+						baf.toByteArray(), 0, baf.length());
+				bis.close();
+				return bitmap;
+
+			} catch (IOException e) {
+				Log.d("DEBUGTAG", "Unable to download file...");
+			}
+			return null;
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) {
+			dialog.setProgress(values[0]);
+		}
+
+		protected void onPostExecute(Bitmap result) {
+			imageView.setImageBitmap(result);
+			if (dialog.isShowing()) {
+				dialog.dismiss();
+			}
+
+		}
+
+	}
 }
