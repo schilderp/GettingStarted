@@ -48,35 +48,24 @@ public class DownloadImageActivity extends Activity {
     	
     	
     	
-    	/** The system calls this to perform work in a worker thread and
-          * delivers it the parameters given to AsyncTask.execute() */
         protected Bitmap doInBackground(String... urls) {
-            return loadImageFromNetwork(urls[0]);
-        }
-        
-        /** The system calls this to perform work in the UI thread and delivers
-          * the result from doInBackground() */
-        protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
-        }
-        private Bitmap loadImageFromNetwork(String imageURL){
-          	try {
-        		URL url = new URL(imageURL);
+        	try {
+        		URL url = new URL(urls[0]);
                 URLConnection conn = url.openConnection();
                 conn.connect();
 
                 BufferedInputStream bis = 
                 		new BufferedInputStream(conn.getInputStream());
+                
+                //instead of: Bitmap bitmap = BitmapFactory.decodeStream(is);
+                //read bytes into an array, then decode
                 ByteArrayBuffer baf = new ByteArrayBuffer(50);
                 int current = 0;
                 while ((current = bis.read()) != -1) {
                         baf.append((byte) current);
                 }
                 Bitmap bitmap=BitmapFactory.decodeByteArray(baf.toByteArray(), 0,baf.length());
-                //Bitmap bitmap = BitmapFactory.decodeStream(is);
+             
                 bis.close();
                 return bitmap;
 
@@ -84,6 +73,15 @@ public class DownloadImageActivity extends Activity {
                 Log.d("DEBUGTAG", "Unable to download file...");
         	}
     	return null;
-    	}
+        }
+        
+  
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+        }
+       
     }
 }
