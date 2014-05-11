@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Course Rating</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="submit">Submit</string>
+    <string-array name="course_type">
+        <item >Major</item>
+        <item >General Education</item>
+        <item >Elective</item>
+    </string-array>
+        <string name="comments">Comments</string>
+        <string name="instructor">Instructor Name</string>
+        <string name="course">Course Name</string>
+        <string name="new_review">Add a review</string>
+        <string name="show_review">Show Reviews</string>
+        <string name="no_reviews">No Reviews</string>
+        <string name="add_rating">Add a Rating</string>
+        <string name="add_review">Add a review</string>
+        <string name="show_reviews">Show Reviews</string>
+
+</resources>
