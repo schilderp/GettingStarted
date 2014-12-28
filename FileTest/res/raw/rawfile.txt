@@ -1,4 +1,0 @@
-Save the static file in res/raw/
-Open it with openRawResource() by passing the resource ID. 
-This method returns an InputStream that you can use to read the file 
-But you cannot write to the original file

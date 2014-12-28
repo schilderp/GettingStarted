@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="hello">Hello World, AsyncTestActivity!</string>
-    <string name="app_name">AsyncTest</string>
-    <string name="url">http://www.cs.lewisu.edu/~kerseycy/images/cookies.jpg</string>
-    <string name="download">Download</string>
-
-</resources>
