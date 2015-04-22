@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Shaker</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="shake">Shake me!</string>
+    <string name="shuffled">The device was shuffled!</string>
+</resources>
